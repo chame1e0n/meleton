@@ -2,7 +2,10 @@
 
 namespace App\Services;
 
+use App\Http\Resources\RateResourceCollection;
 use App\Models\Rate;
+use Spatie\QueryBuilder\Enums\SortDirection;
+use Spatie\QueryBuilder\QueryBuilder;
 
 /**
  * Class to monitor BTC rates.
@@ -29,5 +32,15 @@ class BTC
                 ]);
             }
         }
+    }
+
+    public function rates()
+    {
+        $rates = QueryBuilder::for(Rate::class)
+            ->allowedFilters('currency')
+            ->defaultSort('rate')
+            ->get();
+
+        return new RateResourceCollection($rates);
     }
 }

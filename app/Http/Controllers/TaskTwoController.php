@@ -16,7 +16,7 @@ class TaskTwoController extends Controller
 
     public function rates()
     {
-        return ['action' => 'rates'];
+        return $this->btc->rates();
     }
 
     public function convert()
