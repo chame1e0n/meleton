@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\BTC;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +15,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(BTC::class, function(Application $app) {
+            return new BTC();
+        });
     }
 
     /**
