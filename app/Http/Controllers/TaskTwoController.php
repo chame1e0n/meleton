@@ -19,8 +19,12 @@ class TaskTwoController extends Controller
         return $this->btc->rates();
     }
 
-    public function convert()
+    public function convert(Request $request)
     {
-        return ['action' => 'convert'];
+        try {
+            return $this->btc->convert($request->post());
+        } catch (\Exception $e) {
+            return response(['status' => 'error', 'code' => 403, 'message' => $e->getMessage()], 403);
+        }
     }
 }
