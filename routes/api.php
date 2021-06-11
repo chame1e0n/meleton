@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\EnsureTokenIsValid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('v1')->middleware(EnsureTokenIsValid::class)->group(function () {
+    Route::get('rates', 'TaskTwoController@rates');
+    Route::post('convert', 'TaskTwoController@convert');
 });
